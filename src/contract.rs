@@ -5,7 +5,7 @@ use crate::math::Uint256;
 use bigint::{U512, U256};
 use cosmwasm_std::{DepsMut, Env, InitResponse, MessageInfo, Uint128, Deps, StdResult, entry_point, HandleResponse, attr, HumanAddr, Binary, to_binary, BankMsg, coins};
 use crate::error::ContractError;
-use crate::msg::{InitMsg, ExecuteMsg, QueryMsg};
+use crate::msg::{InitMsg, ExecuteMsg, QueryMsg, CheckSpentResponse, GetLastRootResponse};
 use crate::state::{PTrans, PTRANS, MerkelTree, ROOT_HISTORY_SIZE, MERKEL_TREE};
 
 #[cfg_attr(not(fearute = "library"), entry_point)]
@@ -76,7 +76,7 @@ pub fn query(
     msg: QueryMsg
 ) -> StdResult<Binary> {
     match msg {
-        QueryMsg::CheckSpentMsg{nullifier_hash} => to_binary(&is_spent(deps,_env,nullifier_hash)?),
+        QueryMsg::CheckSpent{nullifier_hash} => to_binary(&is_spent(deps,_env,nullifier_hash)?),
         QueryMsg::GetLastRoot {  } => to_binary(&get_last_root(deps, _env)?),
     }
         
@@ -258,7 +258,7 @@ pub fn is_spent(
     deps: Deps,
     _env: Env,
     nullifier_hash: String
-) -> StdResult<bool> {
+) -> StdResult<CheckSpentResponse> {
     
     let nullifier_hash_uint = Uint256::from_str(&nullifier_hash).unwrap();
     let ptrans = PTRANS.load(deps.storage)?;
@@ -266,23 +266,29 @@ pub fn is_spent(
 
     for i in nullifier_hashs {
         if i == nullifier_hash_uint {
-            return Ok(true);
+            return Ok(CheckSpentResponse{
+                is_spent: true,
+            });
         }
     }
 
-    return Ok(false);
+    return Ok(CheckSpentResponse{
+        is_spent: false,
+    });
 }
 
 pub fn get_last_root(
     deps: Deps,
     _env: Env,
-) -> StdResult<Uint256> {
+) -> StdResult<GetLastRootResponse> {
     let merkel_tree = MERKEL_TREE.load(deps.storage)?;
     let current_root_index = merkel_tree.current_root_index;
 
     let last_root = merkel_tree.roots[current_root_index as usize];
 
-    return Ok(last_root);
+    return Ok(GetLastRootResponse {
+        last_root: last_root.to_string(),
+    });
 }
 
 

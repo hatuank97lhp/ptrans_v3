@@ -3,6 +3,7 @@ use schemars::JsonSchema;
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub struct InitMsg {
     pub denomination: Uint128,
     pub levels: u32,
@@ -24,10 +25,20 @@ pub enum ExecuteMsg {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum QueryMsg {
-    CheckSpentMsg {
+    CheckSpent {
         nullifier_hash: String
     },
 
     GetLastRoot {
     },
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct CheckSpentResponse {
+    pub is_spent: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct GetLastRootResponse {
+    pub last_root: String
 }
