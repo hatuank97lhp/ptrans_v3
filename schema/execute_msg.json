@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecuteMsg",
+  "anyOf": [
+    {
+      "type": "object",
+      "required": [
+        "DepositMsg"
+      ],
+      "properties": {
+        "DepositMsg": {
+          "type": "object",
+          "required": [
+            "commitment"
+          ],
+          "properties": {
+            "commitment": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "WithDrawMsg"
+      ],
+      "properties": {
+        "WithDrawMsg": {
+          "type": "object",
+          "required": [
+            "nullifier_hash",
+            "proof",
+            "recipient",
+            "root"
+          ],
+          "properties": {
+            "nullifier_hash": {
+              "type": "string"
+            },
+            "proof": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 8
+            },
+            "recipient": {
+              "$ref": "#/definitions/HumanAddr"
+            },
+            "root": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "HumanAddr": {
+      "type": "string"
+    }
+  }
+}

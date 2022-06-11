@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QueryMsg",
+  "anyOf": [
+    {
+      "type": "object",
+      "required": [
+        "CheckSpentMsg"
+      ],
+      "properties": {
+        "CheckSpentMsg": {
+          "type": "object",
+          "required": [
+            "nullifier_hash"
+          ],
+          "properties": {
+            "nullifier_hash": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "GetLastRoot"
+      ],
+      "properties": {
+        "GetLastRoot": {
+          "type": "object"
+        }
+      }
+    }
+  ]
+}
