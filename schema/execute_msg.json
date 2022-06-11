@@ -5,10 +5,10 @@
     {
       "type": "object",
       "required": [
-        "DepositMsg"
+        "deposit_msg"
       ],
       "properties": {
-        "DepositMsg": {
+        "deposit_msg": {
           "type": "object",
           "required": [
             "commitment"
@@ -24,10 +24,10 @@
     {
       "type": "object",
       "required": [
-        "WithDrawMsg"
+        "with_draw_msg"
       ],
       "properties": {
-        "WithDrawMsg": {
+        "with_draw_msg": {
           "type": "object",
           "required": [
             "nullifier_hash",
