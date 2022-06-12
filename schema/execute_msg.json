@@ -48,7 +48,7 @@
               "minItems": 8
             },
             "recipient": {
-              "$ref": "#/definitions/HumanAddr"
+              "type": "string"
             },
             "root": {
               "type": "string"
@@ -57,10 +57,5 @@
         }
       }
     }
-  ],
-  "definitions": {
-    "HumanAddr": {
-      "type": "string"
-    }
-  }
+  ]
 }

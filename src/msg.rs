@@ -20,7 +20,7 @@ pub enum ExecuteMsg {
         proof: [String;8],
         root: String,
         nullifier_hash: String,
-        recipient: HumanAddr,
+        recipient: String,
     }
 }
 
